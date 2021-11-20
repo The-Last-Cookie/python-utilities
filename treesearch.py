@@ -6,6 +6,10 @@ QUERY = ''
 
 result = []
 
+if not QUERY:
+    print('Query may not be empty!')
+    exit(-1)
+
 for root, dirs, files in os.walk(PATH):
     if root.find(QUERY) != -1:
         s = str(root)
@@ -13,7 +17,7 @@ for root, dirs, files in os.walk(PATH):
 
     for file in files:
         with open(root + '/' + file, encoding='utf-8') as f:
-            if file.find(FILE_TYPE) != -1:
+            if file.endswith(FILE_TYPE):
                 data = f.read()
 
                 if data.find(QUERY) != -1:
