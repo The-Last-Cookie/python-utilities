@@ -13,7 +13,7 @@ for root, dirs, files in os.walk(PATH):
 
     for file in files:
         with open(root + '/' + file, encoding='utf-8') as f:
-            if file.find() != -1:
+            if file.find(FILE_TYPE) != -1:
                 data = f.read()
 
                 if data.find(QUERY) != -1:
