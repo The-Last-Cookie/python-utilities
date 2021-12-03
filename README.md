@@ -1,5 +1,8 @@
-# treesearch
+# Python utilities
 
-This is a small python script to iterate through a specific folder and search for file contents in the folder as well as its subdirectories.
+This is a small folder for python scripts to make life easier :)
 
-The tool came in handy because I needed to search for file contents in the [osu! wiki](https://github.com/ppy/osu-wiki/).
+- treesearch: Iterate through a specific folder and search for file content in the folder as well as its subdirectories.
+- image-resizer: Resizes an image to a specific size while keeping aspect ratio (and also reduces file size a bit).
+
+These tools came in handy at the [osu! wiki](https://github.com/ppy/osu-wiki/).
