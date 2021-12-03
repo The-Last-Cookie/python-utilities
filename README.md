@@ -6,3 +6,7 @@ This is a small folder for python scripts to make life easier :)
 - image-resizer: Resizes an image to a specific size while keeping aspect ratio (and also reduces file size a bit).
 
 These tools came in handy at the [osu! wiki](https://github.com/ppy/osu-wiki/).
+
+**Requires:**
+
+- [Pillow](https://python-pillow.org/)
