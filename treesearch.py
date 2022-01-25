@@ -1,8 +1,10 @@
 import os
+import re
 
 PATH = r''
 FILE_TYPE = '.md'
 QUERY = ''
+REGEX = 0
 
 result = []
 
@@ -24,12 +26,18 @@ for root, dirs, files in os.walk(PATH):
             if file.endswith(FILE_TYPE):
                 data = f.read()
 
+                if REGEX:
+                    if re.match(QUERY, data):
+                        s = str(root + '/' + file)
+                        result.append(s)
+                        continue
+                
                 if data.find(QUERY) != -1:
                     s = str(root + '/' + file)
                     result.append(s)
         f.close()
 
-result_text = 'These occurences were found (' + str(len(result)) + '):'
+result_text = 'These occurrences were found (' + str(len(result)) + '):'
 print(result_text)
 for s in result:
     print(s)
