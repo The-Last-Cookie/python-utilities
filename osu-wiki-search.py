@@ -99,7 +99,7 @@ def get_result(params):
         if params['search_dirs']:
             for dir in dirs:
                 if dir.find(params['query']) != -1:
-                    s = str(root)
+                    s = str(root + '\\' + dir)
                     result.append(s)
 
         for file in files:
