@@ -91,7 +91,7 @@ def get_result(wiki_link, file_type, query, use_regex):
 
     if not query:
         print('Query may not be empty!')
-        exit(-1)
+        return
 
     for root, dirs, files in os.walk(wiki_link):
         if root.find(query) != -1:
