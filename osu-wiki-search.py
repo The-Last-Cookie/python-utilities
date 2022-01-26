@@ -3,7 +3,6 @@ import re
 import sys
 
 def print_help():
-    print('No arguments provided\n')
     print('Usage:')
     print('  -d, --dirs\t\tAlso search in directory names.')
     print('  -h, --help\t\tPrint this view.')
@@ -122,6 +121,7 @@ def get_result(params):
 
 def main():
     if len(sys.argv) < 2:
+        print('No arguments provided\n')
         print_help()
         return
     
