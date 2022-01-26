@@ -86,27 +86,27 @@ def get_wiki_link():
 
     return ''
 
-def get_result(wiki_link, file_type, query, use_regex):
+def get_result(params):
     result = []
 
-    for root, dirs, files in os.walk(wiki_link):
+    for root, dirs, files in os.walk(params['wiki_link']):
         for dir in dirs:
-            if dir.find(query) != -1:
+            if dir.find(params['query']) != -1:
                 s = str(root)
                 result.append(s)
 
         for file in files:
             with open(root + '/' + file, encoding='utf-8') as f:
-                if file.endswith(file_type):
+                if file.endswith(params['file_type']):
                     data = f.read()
 
-                    if use_regex:
-                        if re.search(query, data):
+                    if params['use_regex']:
+                        if re.search(params['query'], data):
                             s = str(root + '\\' + file)
                             result.append(s)
                             continue
                         
-                    if data.find(query) != -1:
+                    if data.find(params['query']) != -1:
                         s = str(root + '\\' + file)
                         result.append(s)
             f.close()
@@ -132,7 +132,10 @@ def main():
         
         return
 
-    file_type = '.md'
+    # Params for search algorithm
+    params = []
+
+    params['file_type'] = '.md'
     if 'l' in args.keys():
         valid_languages = \
         ['en', 'ar', 'be', 'bg', 'cs', 'da', 'de', 'gr', 'es', 'fi', 'fr',
@@ -140,25 +143,26 @@ def main():
         'ro', 'ru', 'sk', 'sv', 'th', 'tr', 'uk', 'vi', 'zh', 'zh-tw']
 
         if args['l'] in valid_languages:
-            file_type = args['l'] + '.md'
+            params['file_type'] = args['l'] + '.md'
 
-    use_regex = False
+    params['use_regex'] = False
     if 'r' in args.keys():
-        use_regex = True
+        params['use_regex'] = True
 
-    query = ''
     if 'q' not in args.keys():
         print('Query may not be empty!')
         return
     
-    query = args['q']
+    params['query'] = args['q']
     
     wiki_link = get_wiki_link()
     if not wiki_link:
         print('Not a valid wiki link. Try setting the link via -s or --set.')
         return
+
+    params['wiki_link'] = wiki_link
     
-    result = get_result(wiki_link, file_type, query, use_regex)
+    result = get_result(params)
 
     result_text = 'These occurrences were found (' + str(len(result)) + '):'
     print(result_text)
