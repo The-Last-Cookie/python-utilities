@@ -89,10 +89,6 @@ def get_wiki_link():
 def get_result(wiki_link, file_type, query, use_regex):
     result = []
 
-    if not file_type:
-        print('File type may not be empty!')
-        exit(-1)
-
     if not query:
         print('Query may not be empty!')
         exit(-1)
