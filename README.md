@@ -22,7 +22,7 @@ The [osu! wiki](https://github.com/ppy/osu-wiki/) is a knowledge base for the rh
 
 With this tool, you can search for file content in any wiki article.
 
-This should be used as a cli tool for Windows via converting the script into an executable (can be done with `pyinstaller osu-wiki-search.py --onefile`). Not sure if it runs also on UNIX-based systems, because I didn't try it yet.
+This should be used as a cli tool for Windows via converting the script into an executable (can be done with `pyinstaller osu-wiki-search.py --onefile`). I'm not sure if it also runs on UNIX-based systems, because I haven't tried it yet.
 
 ## Wrapper for youtube-dl
 
