@@ -5,11 +5,11 @@ import sys
 def print_help():
     print('No arguments provided\n')
     print('Usage:')
-    print('  -d, --dirs\tAlso search in directory names.')
-    print('  -h, --help\tPrint this view.')
+    print('  -d, --dirs\t\tAlso search in directory names.')
+    print('  -h, --help\t\tPrint this view.')
     print('  -l, --language\tSet specific language. Can be any language the wiki supports.')
-    print('  -r, --regex\tSearch with a regex pattern.')
-    print('  -s, --set\tSet the link to the wiki.')
+    print('  -r, --regex\t\tSearch with a regex pattern.')
+    print('  -s, --set\t\tSet the link to the wiki.')
 
 def try_next_arg(index):
     try:
