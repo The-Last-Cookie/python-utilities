@@ -89,10 +89,6 @@ def get_wiki_link():
 def get_result(wiki_link, file_type, query, use_regex):
     result = []
 
-    if not query:
-        print('Query may not be empty!')
-        return
-
     for root, dirs, files in os.walk(wiki_link):
         if root.find(query) != -1:
             s = str(root)
@@ -150,9 +146,12 @@ def main():
         use_regex = True
 
     query = ''
-    if 'q' in args.keys():
-        query = args['q']
-
+    if 'q' not in args.keys():
+        print('Query may not be empty!')
+        return
+    
+    query = args['q']
+    
     wiki_link = get_wiki_link()
     if not wiki_link:
         print('Not a valid wiki link. Try setting the link via -s or --set.')
