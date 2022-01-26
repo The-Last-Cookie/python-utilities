@@ -101,12 +101,12 @@ def get_result(wiki_link, file_type, query, use_regex):
 
                     if use_regex:
                         if re.search(query, data):
-                            s = str(root + '/' + file)
+                            s = str(root + '\\' + file)
                             result.append(s)
                             continue
                         
                     if data.find(query) != -1:
-                        s = str(root + '/' + file)
+                        s = str(root + '\\' + file)
                         result.append(s)
             f.close()
 
