@@ -5,10 +5,11 @@ import sys
 def print_help():
     print('No arguments provided\n')
     print('Usage:')
-    print('\t-h, --help\tPrint this view.')
-    print('\t-l, --language\tSet specific language. Can be any language the wiki supports.')
-    print('\t-r, --regex\tSearch with a regex pattern.')
-    print('\t-s, --set\tSet the link to the wiki.')
+    print('  -d, --dirs\tAlso search in directory names.')
+    print('  -h, --help\tPrint this view.')
+    print('  -l, --language\tSet specific language. Can be any language the wiki supports.')
+    print('  -r, --regex\tSearch with a regex pattern.')
+    print('  -s, --set\tSet the link to the wiki.')
 
 def try_next_arg(index):
     try:
@@ -43,6 +44,11 @@ def get_args():
 
         if sys.argv[i] == '-r' or sys.argv[i] == '--regex':
             args.update({'r': ''})
+            i = i + 1
+            continue
+
+        if sys.argv[i] == '-d' or sys.argv[i] == '--dirs':
+            args.update({'d': ''})
             i = i + 1
             continue
 
@@ -90,10 +96,11 @@ def get_result(params):
     result = []
 
     for root, dirs, files in os.walk(params['wiki_link']):
-        for dir in dirs:
-            if dir.find(params['query']) != -1:
-                s = str(root)
-                result.append(s)
+        if params['search_dirs']:
+            for dir in dirs:
+                if dir.find(params['query']) != -1:
+                    s = str(root)
+                    result.append(s)
 
         for file in files:
             with open(root + '/' + file, encoding='utf-8') as f:
@@ -154,6 +161,10 @@ def main():
         return
     
     params['query'] = args['q']
+
+    params['search_dirs'] = False
+    if 'd' in args.keys():
+        params['search_dirs'] = True
     
     wiki_link = get_wiki_link()
     if not wiki_link:
