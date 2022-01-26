@@ -175,9 +175,14 @@ def main():
     
     result = get_result(params)
 
-    result_text = 'These occurrences were found (' + str(len(result)) + '):'
-    print(result_text)
+    # Print result
     for s in result:
         print(s)
+
+    if len(result) == 1:
+        result_text = str(len(result)) + ' occurrence was found.'
+    else:
+        result_text = str(len(result)) + ' occurrences were found.'
+    print(result_text)
 
 main()
