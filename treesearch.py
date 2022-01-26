@@ -90,9 +90,10 @@ def get_result(wiki_link, file_type, query, use_regex):
     result = []
 
     for root, dirs, files in os.walk(wiki_link):
-        if root.find(query) != -1:
-            s = str(root)
-            result.append(s)
+        for dir in dirs:
+            if dir.find(query) != -1:
+                s = str(root)
+                result.append(s)
 
         for file in files:
             with open(root + '/' + file, encoding='utf-8') as f:
