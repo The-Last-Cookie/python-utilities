@@ -140,7 +140,7 @@ def main():
         return
 
     # Params for search algorithm
-    params = []
+    params = {}
 
     params['file_type'] = '.md'
     if 'l' in args.keys():
