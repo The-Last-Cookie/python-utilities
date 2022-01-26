@@ -2,10 +2,34 @@
 
 This is a small folder for python scripts to make life easier :)
 
-- treesearch: Iterate through a specific folder and search for file content in the folder as well as its subdirectories.
-- image-resizer: Resizes an image to a specific size while keeping aspect ratio (and also reduces file size a bit).
-    - **Requires**: [Pillow](https://python-pillow.org/)
-- yt-dl: Python wrapper for executing a specific command via [youtube-dl](https://github.com/ytdl-org/youtube-dl).
-    - Simplifies the workflow a bit, so that the command doesn't need to be typed in the console every time. Mainly using this for downloading music as `.mp3`.
+## Image resizer
 
-_treesearch_ and _image-resizer_ were useful for the [osu! wiki](https://github.com/ppy/osu-wiki/), a knowledge base for the rythm game osu!.
+```md
+image-resizer.py
+```
+
+Resizes an image (or several) to a specific size while keeping its aspect ratio (and also reduces file size a bit).
+
+*Notice: This requires [Pillow](https://python-pillow.org/).*
+
+## osu! wiki search
+
+```md
+osu-wiki-search.py
+```
+
+The [osu! wiki](https://github.com/ppy/osu-wiki/) is a knowledge base for the rhythm game called *osu!*. For more information about osu!, see [here](https://osu.ppy.sh).
+
+With this tool, you can search for file content in any wiki article.
+
+This should be used as a cli tool for Windows via converting the script into an executable (can be done with `pyinstaller osu-wiki-search.py --onefile`). Not sure if it runs also on UNIX-based systems, because I didn't try it yet.
+
+## Wrapper for youtube-dl
+
+```md
+yt-dl.py
+```
+
+This is a python wrapper for executing a specific command via [youtube-dl](https://github.com/ytdl-org/youtube-dl).
+
+It simplifies the workflow a bit, so that the command doesn't need to be typed in the console every time. Mainly using this for downloading music as `.mp3`.
