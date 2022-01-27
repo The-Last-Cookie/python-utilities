@@ -4,7 +4,7 @@ import sys
 
 def print_help():
     print('Usage:')
-    print('  -d, --dirs\t\tAlso search in directory names.')
+    print('  -d, --dirs\t\tSearch only in directory names.')
     print('  -h, --help\t\tPrint this view.')
     print('  -l, --language\tSet specific language. Can be any language the wiki supports.')
     print('  -r, --regex\t\tSearch with a regex pattern.')
@@ -100,6 +100,7 @@ def get_result(params):
                 if dir.find(params['query']) != -1:
                     s = str(root + '\\' + dir)
                     result.append(s)
+            return result
 
         for file in files:
             with open(root + '/' + file, encoding='utf-8') as f:
