@@ -100,7 +100,7 @@ def get_result(params):
                 if dir.find(params['query']) != -1:
                     s = str(root + '\\' + dir)
                     result.append(s)
-            return result
+            continue
 
         for file in files:
             with open(root + '/' + file, encoding='utf-8') as f:
