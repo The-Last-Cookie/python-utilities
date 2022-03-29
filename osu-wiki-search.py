@@ -9,6 +9,7 @@ def print_help():
     print('  -l, --language\tSet specific language. Can be any language the wiki supports.')
     print('  -r, --regex\t\tSearch with a regex pattern.')
     print('  -s, --set\t\tSet the link to the wiki.')
+    print('  -v, --verbose\t\tOutput of the entire link to found files.')
 
 def try_next_arg(index):
     try:
@@ -48,6 +49,11 @@ def get_args():
 
         if sys.argv[i] == '-d' or sys.argv[i] == '--dirs':
             args.update({'d': ''})
+            i = i + 1
+            continue
+
+        if sys.argv[i] == '-v' or sys.argv[i] == '--verbose':
+            args.update({'v': ''})
             i = i + 1
             continue
 
@@ -91,13 +97,22 @@ def get_wiki_link():
 
     return ''
 
+def get_root_link(root, verbose_output):
+    if not verbose_output:
+        position = root.find('\\wiki\\')
+        if position != -1:
+            # remove '\wiki\' from link
+            return root[position + 6:]
+    
+    return root
+
 def get_result(params):
     result = []
 
     for root, dirs, files in os.walk(params['wiki_link']):
         if params['search_dirs']:
             for dir in dirs:
-                s = str(root + '\\' + dir)
+                s = str(get_root_link(root, params['verbose_output']) + '\\' + dir)
 
                 # don't include image directories
                 if s.find(params['query']) != -1 and not s.endswith('img'):
@@ -111,12 +126,12 @@ def get_result(params):
 
                     if params['use_regex']:
                         if re.search(params['query'], data):
-                            s = str(root + '\\' + file)
+                            s = str(get_root_link(root, params['verbose_output']) + '\\' + file)
                             result.append(s)
                             continue
-                        
+
                     if data.find(params['query']) != -1:
-                        s = str(root + '\\' + file)
+                        s = str(get_root_link(root, params['verbose_output']) + '\\' + file)
                         result.append(s)
             f.close()
 
@@ -168,6 +183,10 @@ def main():
     params['search_dirs'] = False
     if 'd' in args.keys():
         params['search_dirs'] = True
+
+    params['verbose_output'] = False
+    if 'v' in args.keys():
+        params['verbose_output'] = True
     
     wiki_link = get_wiki_link()
     if not wiki_link:
