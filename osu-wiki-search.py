@@ -4,12 +4,12 @@ import sys
 
 def print_help():
     print('Usage:')
-    print('  -d, --dirs\t\tSearch only in directory names.\n\t\tNotice: On Windows, you need to use \'\\\' if you want to search across several folders.')
-    print('  -h, --help\t\tPrint this view.')
-    print('  -l, --language\tSet specific language. Can be any language the wiki supports.')
-    print('  -r, --regex\t\tSearch with a regex pattern.')
-    print('  -s, --set\t\tSet the link to the wiki.')
-    print('  -v, --verbose\t\tOutput of the entire link to found files.')
+    print('  -d, --dirs\t\t\tSearch only in directory names. Notice: On Windows, you need to use \'\\\' if you want to search across several folders.')
+    print('  -h, --help\t\t\tPrint this view.')
+    print('  -l, --language [language]\tSet specific language. Can be any language the wiki supports.')
+    print('  -r, --regex\t\t\tSearch with a regex pattern.')
+    print('  -s, --set\t\t\tSet the link to the wiki.')
+    print('  -v, --verbose\t\t\tOutput of the entire link to found files.')
 
 def try_next_arg(index):
     try:
