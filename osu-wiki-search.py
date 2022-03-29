@@ -97,8 +97,10 @@ def get_result(params):
     for root, dirs, files in os.walk(params['wiki_link']):
         if params['search_dirs']:
             for dir in dirs:
-                if dir.find(params['query']) != -1:
-                    s = str(root + '\\' + dir)
+                s = str(root + '\\' + dir)
+
+                # don't include image directories
+                if s.find(params['query']) != -1 and not s.endswith('img'):
                     result.append(s)
             continue
 
