@@ -4,7 +4,7 @@ import sys
 
 def print_help():
     print('Usage:')
-    print('  -d, --dirs\t\tSearch only in directory names.')
+    print('  -d, --dirs\t\tSearch only in directory names.\n\t\tNotice: On Windows, you need to use \'\\\' if you want to search across several folders.')
     print('  -h, --help\t\tPrint this view.')
     print('  -l, --language\tSet specific language. Can be any language the wiki supports.')
     print('  -r, --regex\t\tSearch with a regex pattern.')
