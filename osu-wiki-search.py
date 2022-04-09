@@ -104,11 +104,19 @@ def get_wiki_link():
 def get_root_link(root, verbose_output):
     if not verbose_output:
         position = root.find('\\wiki\\')
+
+        # remove '\wiki\' from link
         if position != -1:
-            # remove '\wiki\' from link
-            return root[position + 6:]
-    
-    return root
+            return root[position + 6:] + '\\'
+        else:
+            # there is no subfolder (root ends with '\wiki')
+            return ''
+
+    # check if root has subfolder
+    if root.endswith('\\wiki'):
+        return root
+
+    return root + '\\'
 
 def get_result(params):
     result = []
@@ -116,7 +124,7 @@ def get_result(params):
     for root, dirs, files in os.walk(params['wiki_link']):
         if params['search_dirs']:
             for dir in dirs:
-                s = str(get_root_link(root, params['verbose_output']) + '\\' + dir)
+                s = str(get_root_link(root, params['verbose_output']) + dir)
 
                 # don't include image directories
                 if s.find(params['query']) != -1 and not s.endswith('img'):
@@ -130,12 +138,12 @@ def get_result(params):
 
                     if params['use_regex']:
                         if re.search(params['query'], data):
-                            s = str(get_root_link(root, params['verbose_output']) + '\\' + file)
+                            s = str(get_root_link(root, params['verbose_output']) + file)
                             result.append(s)
                             continue
 
                     if data.find(params['query']) != -1:
-                        s = str(get_root_link(root, params['verbose_output']) + '\\' + file)
+                        s = str(get_root_link(root, params['verbose_output']) + file)
                         result.append(s)
             f.close()
 
