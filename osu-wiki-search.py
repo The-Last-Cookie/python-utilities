@@ -146,7 +146,7 @@ def main():
         print('No arguments provided\n')
         print_help()
         return
-    
+
     args = get_args()
 
     if 'h' in args.keys():
