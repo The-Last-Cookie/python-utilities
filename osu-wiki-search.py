@@ -88,14 +88,18 @@ def set_wiki_link(link):
 
 def get_wiki_link():
     path = get_path(sys.executable)
-    f = open(path + '\\wiki_link.txt', 'r', encoding='utf-8')
-    link_data = f.read()
-    f.close()
 
-    if link_data:
-        return link_data
+    try:
+        f = open(path + '\\wiki_link.txt', 'r', encoding='utf-8')
+        link_data = f.read()
+        f.close()
 
-    return ''
+        if link_data:
+            return link_data
+
+        return ''
+    except FileNotFoundError:
+        return ''
 
 def get_root_link(root, verbose_output):
     if not verbose_output:
