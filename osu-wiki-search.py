@@ -211,4 +211,5 @@ def main():
         result_text = str(len(result)) + ' occurrences were found.'
     print(result_text)
 
-main()
+if __name__ == '__main__':
+    main()
