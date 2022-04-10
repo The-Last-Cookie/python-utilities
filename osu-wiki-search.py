@@ -157,6 +157,18 @@ def get_root_link(root, verbose_output) -> str:
 
     return root + '\\'
 
+def should_be_excluded(str, exclude_params, use_regex):
+    if use_regex:
+        for exclude in exclude_params:
+            if re.search(exclude, str) is not None:
+                return True
+    else:
+        for exclude in exclude_params:
+            if str.find(exclude) != -1:
+                return True
+
+    return False
+
 def search_dirs(params) -> list:
     result = []
 
