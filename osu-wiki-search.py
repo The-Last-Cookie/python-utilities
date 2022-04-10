@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import textwrap
 
 class ArgumentParser():
     def __init__(self, args=dict) -> None:
@@ -17,14 +18,33 @@ class ArgumentParser():
 
         return True
 
+class HelpPrinter():
+    def __init__(self) -> None:
+        # using the whole screen may produce bad formatted output
+        # I found this to work for most screen resolutions
+        self.max_text_length = int(os.get_terminal_size()[0] * 0.75) - 20
+
+        self.phrases = []
+        self.phrases.append('Search for file contents in the osu! wiki.')
+        self.phrases.append('\nUsage: [OPTIONS] SEARCH_QUERY [SEARCH_QUERY...]')
+        self.phrases.append('\nMaintenance:')
+        self.phrases.append('  -h, --help\t\t\tPrint this view.')
+        self.phrases.append('  -s, --set [link]\t\tSet the link to the wiki.')
+        self.phrases.append('\nSearch options:')
+        self.phrases.append('  -d, --dirs\t\t\tSearch only in directory names. Notice: On Windows, you need to use \'\\\' if you want to search via folder paths.')
+        self.phrases.append('  -l, --language [language]\tSet specific language. Can be any language the wiki supports (two-letter country code).')
+        self.phrases.append('  -r, --regex [regex]\t\tSearch with a regex pattern.')
+        self.phrases.append('\nOutput options:')
+        self.phrases.append('  -v, --verbose\t\t\tOutput of the entire link to found files.')
+
+    def print(self) -> None:
+        for phrase in self.phrases:
+            text = textwrap.fill(phrase, subsequent_indent='\t\t\t\t', width=self.max_text_length, replace_whitespace=False)
+            print(text)
+
 def print_help():
-    print('Usage:')
-    print('  -d, --dirs\t\t\tSearch only in directory names. Notice: On Windows, you need to use \'\\\' if you want to search via folder paths.')
-    print('  -h, --help\t\t\tPrint this view.')
-    print('  -l, --language [language]\tSet specific language. Can be any language the wiki supports.')
-    print('  -r, --regex\t\t\tSearch with a regex pattern.')
-    print('  -s, --set\t\t\tSet the link to the wiki.')
-    print('  -v, --verbose\t\t\tOutput of the entire link to found files.')
+    h = HelpPrinter()
+    h.print()
 
 def try_next_arg(index) -> str:
     try:
