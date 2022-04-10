@@ -11,7 +11,7 @@ def print_help():
     print('  -s, --set\t\t\tSet the link to the wiki.')
     print('  -v, --verbose\t\t\tOutput of the entire link to found files.')
 
-def try_next_arg(index):
+def try_next_arg(index) -> str:
     try:
         element = sys.argv[index]
     except IndexError:
@@ -19,7 +19,7 @@ def try_next_arg(index):
 
     return element
 
-def get_args():
+def get_args() -> dict:
     args = {}
     # Skip file name argument
     i = 1
@@ -67,7 +67,8 @@ def get_args():
 
     return args
 
-def get_path(link_to_file):
+# return path to a file, without the file entry
+def get_path(link_to_file) -> str:
     if link_to_file.rfind('\\') == -1:
         path = link_to_file
     else:
@@ -76,7 +77,7 @@ def get_path(link_to_file):
     
     return path
 
-def set_wiki_link(link):
+def set_wiki_link(link) -> bool:
     if not os.path.exists(link):
         return False
 
@@ -86,7 +87,7 @@ def set_wiki_link(link):
     
     return True
 
-def get_wiki_link():
+def get_wiki_link() -> str:
     path = get_path(sys.executable)
 
     try:
@@ -101,7 +102,7 @@ def get_wiki_link():
     except FileNotFoundError:
         return ''
 
-def get_root_link(root, verbose_output):
+def get_root_link(root, verbose_output) -> str:
     if not verbose_output:
         position = root.find('\\wiki\\')
 
