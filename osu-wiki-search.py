@@ -13,8 +13,9 @@ class ArgumentParser():
             try:
                 re.compile(self.args['q'])
 
-                for term in self.args.get('e'):
-                    re.compile(term)
+                if self.args.get('e'):
+                    for term in self.args.get('e'):
+                        re.compile(term)
             except re.error as error:
                 print('The regex argument is set, therefore all values must be valid regex.\n')
                 print('Error message: ' + error.msg)
