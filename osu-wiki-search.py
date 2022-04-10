@@ -12,6 +12,9 @@ class ArgumentParser():
         if self.args.get('r'):
             try:
                 re.compile(self.args['q'])
+
+                for term in self.args.get('e'):
+                    re.compile(term)
             except re.error as error:
                 print('The regex argument is set, therefore all values must be valid regex.\n')
                 print('Error message: ' + error.msg)
@@ -38,6 +41,7 @@ class HelpPrinter():
         self.phrases.append('  -l, --language [language]\tSet specific language. Can be any language the wiki supports (two-letter country code).')
         self.phrases.append('  -r, --regex [regex]\t\tSearch with a regex pattern.')
         self.phrases.append('\nOutput options:')
+        self.phrases.append('  -e, --exclude [query]\t\tExclude a query from the search. Use this parameter several times if you want to exclude several terms. If the -r argument is set, the value here must be valid regex. Notice: On Windows, you need to use \'\\\' if you want to exclude specific folder paths.')
         self.phrases.append('  -v, --verbose\t\t\tOutput of the entire link to found files.')
 
     def print(self) -> None:
@@ -77,6 +81,18 @@ def get_args() -> dict:
         if sys.argv[i] == '-l' or sys.argv[i] == '--language':
             next_arg = try_next_arg(i + 1)
             args.update({'l': next_arg})
+            i = i + 2
+            continue
+
+        if sys.argv[i] == '-e' or sys.argv[i] == '--exclude':
+            next_arg = try_next_arg(i + 1)
+            current_list = args.get('e')
+
+            if current_list is None:
+                args.update({'e': [next_arg]})
+            else:
+                current_list.append(next_arg)
+                args.update({'e': current_list})
             i = i + 2
             continue
 
@@ -176,10 +192,15 @@ def search_dirs(params) -> list:
         for dir in dirs:
             s = str(get_root_link(root, params['verbose_output']) + dir)
 
-            # don't include image directories
-            if s.find(params['query']) != -1 and not s.endswith('img'):
-                result.append(s)
-
+            if params['use_regex']:
+                # don't include image directories
+                if re.search(params['query'], s) is not None and not s.endswith('img'):
+                    if not should_be_excluded(s, params['exclude_terms'], params['use_regex']):
+                        result.append(s)
+            else:
+                if s.find(params['query']) != -1 and not s.endswith('img'):
+                    if not should_be_excluded(s, params['exclude_terms'], params['use_regex']):
+                        result.append(s)
     return result
 
 def search_files(params) -> list:
@@ -194,13 +215,16 @@ def search_files(params) -> list:
                     if params['use_regex']:
                         if re.search(params['query'], data):
                             s = str(get_root_link(root, params['verbose_output']) + file)
-                            result.append(s)
+                            if not should_be_excluded(data, params['exclude_terms'], params['use_regex']):
+                                result.append(s)
+                            
+                            # start with next file
                             continue
 
                     if data.find(params['query']) != -1:
                         s = str(get_root_link(root, params['verbose_output']) + file)
-                        result.append(s)
-
+                        if not should_be_excluded(data, params['exclude_terms'], params['use_regex']):
+                            result.append(s)
     return result
 
 def get_result(params) -> list:
@@ -261,7 +285,11 @@ def main() -> None:
     params['verbose_output'] = False
     if 'v' in parser.args.keys():
         params['verbose_output'] = True
-    
+
+    params['exclude_terms'] = []
+    if 'e' in parser.args.keys():
+        params['exclude_terms'] = parser.args.get('e')
+
     wiki_link = get_wiki_link()
     if not wiki_link:
         print('Not a valid wiki link. Try setting the link via -s or --set.')
