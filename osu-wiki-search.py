@@ -173,7 +173,7 @@ def get_root_link(root, verbose_output) -> str:
 
     return root + '\\'
 
-def should_be_excluded(str, exclude_params, use_regex):
+def should_be_excluded(str, exclude_params, use_regex) -> bool:
     if use_regex:
         for exclude in exclude_params:
             if re.search(exclude, str) is not None:
