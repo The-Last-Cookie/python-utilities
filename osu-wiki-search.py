@@ -12,8 +12,11 @@ class ArgumentParser():
         if self.args.get('r'):
             try:
                 re.compile(self.args['q'])
-            except re.error:
-                print('The regex argument is set, therefore all values must be valid regex.')
+            except re.error as error:
+                print('The regex argument is set, therefore all values must be valid regex.\n')
+                print('Error message: ' + error.msg)
+                print('Pattern: ' + error.pattern)
+                print('At position: ' + str(error.pos))
                 return False
 
         return True
