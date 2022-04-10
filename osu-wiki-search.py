@@ -134,19 +134,23 @@ def get_root_link(root, verbose_output) -> str:
 
     return root + '\\'
 
-def get_result(params):
+def search_dirs(params) -> list:
     result = []
 
     for root, dirs, files in os.walk(params['wiki_link']):
-        if params['search_dirs']:
-            for dir in dirs:
-                s = str(get_root_link(root, params['verbose_output']) + dir)
+        for dir in dirs:
+            s = str(get_root_link(root, params['verbose_output']) + dir)
 
-                # don't include image directories
-                if s.find(params['query']) != -1 and not s.endswith('img'):
-                    result.append(s)
-            continue
+            # don't include image directories
+            if s.find(params['query']) != -1 and not s.endswith('img'):
+                result.append(s)
 
+    return result
+
+def search_files(params) -> list:
+    result = []
+
+    for root, dirs, files in os.walk(params['wiki_link']):
         for file in files:
             with open(root + '/' + file, encoding='utf-8') as f:
                 if file.endswith(params['file_type']):
