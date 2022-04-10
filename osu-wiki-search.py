@@ -9,7 +9,7 @@ class ArgumentParser():
 
     def validate(self) -> bool:
         # check if regex values are valid
-        if self.args.get('r'):
+        if 'r' in self.args.keys():
             try:
                 re.compile(self.args['q'])
 
@@ -21,7 +21,6 @@ class ArgumentParser():
                 print('Pattern: ' + error.pattern)
                 print('At position: ' + str(error.pos))
                 return False
-
         return True
 
 class HelpPrinter():
