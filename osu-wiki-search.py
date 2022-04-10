@@ -2,6 +2,21 @@ import os
 import re
 import sys
 
+class ArgumentParser():
+    def __init__(self, args=dict) -> None:
+        self.args = args
+
+    def validate(self) -> bool:
+        # check if regex values are valid
+        if self.args.get('r'):
+            try:
+                re.compile(self.args['q'])
+            except re.error:
+                print('The regex argument is set, therefore all values must be valid regex.')
+                return False
+
+        return True
+
 def print_help():
     print('Usage:')
     print('  -d, --dirs\t\t\tSearch only in directory names. Notice: On Windows, you need to use \'\\\' if you want to search via folder paths.')
@@ -146,25 +161,32 @@ def get_result(params):
                     if data.find(params['query']) != -1:
                         s = str(get_root_link(root, params['verbose_output']) + file)
                         result.append(s)
-            f.close()
 
     return result
 
-def main():
+def get_result(params) -> list:
+    if params['search_dirs']:
+        return search_dirs(params)
+
+    return search_files(params)
+
+def main() -> None:
     if len(sys.argv) < 2:
         print('No arguments provided\n')
         print_help()
         return
 
-    args = get_args()
+    parser = ArgumentParser(get_args())
+    if not parser.validate():
+        return
 
-    if 'h' in args.keys():
+    if 'h' in parser.args.keys():
         print_help()
         return
 
-    if 's' in args.keys():
-        if set_wiki_link(args['s']):
-            print('Wiki link has been set to: ' + args['s'])
+    if 's' in parser.args.keys():
+        if set_wiki_link(parser.args['s']):
+            print('Wiki link has been set to: ' + parser.args['s'])
         else:
             print('This wiki link is not valid.')
         
@@ -174,31 +196,31 @@ def main():
     params = {}
 
     params['file_type'] = '.md'
-    if 'l' in args.keys():
+    if 'l' in parser.args.keys():
         valid_languages = \
         ['en', 'ar', 'be', 'bg', 'cs', 'da', 'de', 'gr', 'es', 'fi', 'fr',
         'hu', 'id', 'it', 'ja', 'ko', 'nl', 'no', 'pl', 'pt', 'pt-br',
         'ro', 'ru', 'sk', 'sv', 'th', 'tr', 'uk', 'vi', 'zh', 'zh-tw']
 
-        if args['l'] in valid_languages:
-            params['file_type'] = args['l'] + '.md'
+        if parser.args['l'] in valid_languages:
+            params['file_type'] = parser.args['l'] + '.md'
 
     params['use_regex'] = False
-    if 'r' in args.keys():
+    if 'r' in parser.args.keys():
         params['use_regex'] = True
 
-    if 'q' not in args.keys():
+    if 'q' not in parser.args.keys():
         print('Query may not be empty!')
         return
     
-    params['query'] = args['q']
+    params['query'] = parser.args['q']
 
     params['search_dirs'] = False
-    if 'd' in args.keys():
+    if 'd' in parser.args.keys():
         params['search_dirs'] = True
 
     params['verbose_output'] = False
-    if 'v' in args.keys():
+    if 'v' in parser.args.keys():
         params['verbose_output'] = True
     
     wiki_link = get_wiki_link()
