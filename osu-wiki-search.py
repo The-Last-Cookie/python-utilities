@@ -11,7 +11,8 @@ class ArgumentParser():
         # check if regex values are valid
         if 'r' in self.args.keys():
             try:
-                re.compile(self.args['q'])
+                if self.args.get('q'):
+                    re.compile(self.args['q'])
 
                 if self.args.get('e'):
                     for term in self.args.get('e'):
