@@ -168,10 +168,6 @@ def get_root_link(root, verbose_output) -> str:
             # there is no subfolder (root ends with '\wiki')
             return ''
 
-    # check if root has subfolder
-    if root.endswith('\\wiki'):
-        return root
-
     return root + '\\'
 
 def should_be_excluded(str, exclude_params, use_regex) -> bool:
