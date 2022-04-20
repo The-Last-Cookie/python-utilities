@@ -182,21 +182,34 @@ def should_be_excluded(str, exclude_params, use_regex) -> bool:
 
     return False
 
+def file_type_in_files(file_type, files) -> bool:
+    if file_type == '.md':
+        return True
+
+    if file_type in files:
+        return True
+
+    return False
+
 def search_dirs(params) -> list:
     result = []
 
     for root, dirs, files in os.walk(params['wiki_link']):
         for dir in dirs:
             s = str(get_root_link(root, params['verbose_output']) + dir)
+            abs_path = get_root_link(root, verbose_output=True) + dir
+            files_in_subfolder = os.listdir(abs_path)
 
             if params['use_regex']:
                 # don't include image directories
                 if re.search(params['query'], s) is not None and not s.endswith('img'):
-                    if not should_be_excluded(s, params['exclude_terms'], params['use_regex']):
+                    if ((not should_be_excluded(s, params['exclude_terms'], params['use_regex']))
+                        and file_type_in_files(params['file_type'], files_in_subfolder)):
                         result.append(s)
             else:
                 if s.find(params['query']) != -1 and not s.endswith('img'):
-                    if not should_be_excluded(s, params['exclude_terms'], params['use_regex']):
+                    if ((not should_be_excluded(s, params['exclude_terms'], params['use_regex']))
+                        and file_type_in_files(params['file_type'], files_in_subfolder)):
                         result.append(s)
     return result
 
