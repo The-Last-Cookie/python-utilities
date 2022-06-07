@@ -9,19 +9,19 @@ def read_country_file(file: str) -> list:
 
     return lines
 
-def replace_country_in_line(line: str, target: dict) -> str:
-    for key, value in target.items():
+def replace_country_in_line(line: str, countries: dict) -> str:
+    for key, value in countries.items():
         line = line.replace(key, value)
 
     return line
 
-def translate_countries(file: str, target: dict) -> None:
+def translate_countries(file: str, countries: dict) -> None:
     lines = []
     with open(file, mode='r', encoding='utf-8', newline='\n') as r:
         lines = r.readlines()
 
         for line_index, line in enumerate(lines):
-            new_line = replace_country_in_line(line, target)
+            new_line = replace_country_in_line(line, countries)
             lines[line_index] = new_line
 
     with open(file, mode='w', encoding='utf-8', newline='\n') as w:
