@@ -1,6 +1,21 @@
 from datetime import datetime
 import re
 
+MONTHS = [
+    'Januar',
+    'Februar',
+    'März',
+    'April',
+    'Mai',
+    'Juni',
+    'Juli',
+    'August',
+    'September',
+    'Oktober',
+    'November',
+    'Dezember'
+]
+
 def change_date_in_line(line: str, o_format: str, t_format: str) -> str:
     """
     o_format: Original format that should be replaced
@@ -17,6 +32,23 @@ def change_date_in_line(line: str, o_format: str, t_format: str) -> str:
         o_date = datetime.strptime(match, o_format)
         t_date = o_date.strftime(t_format)
         line = line.replace(match, t_date)
+
+    iter = re.finditer(r'[0-9]{4}-[0-1][0-9]', line)
+    matches = []
+
+    for m in iter:
+        string = line[m.start(0):m.end(0)]
+        match = {
+            'string': string,
+            'year': string[0:4],
+            'month': string[5:]
+        }
+        matches.append(match)
+
+    for match in matches:
+        month_name = MONTHS[int(match['month']) - 1]
+        new_date = month_name + ' ' + match['year']
+        line = line.replace(match['string'], new_date)
 
     return line
 
