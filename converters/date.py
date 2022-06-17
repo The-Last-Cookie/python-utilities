@@ -12,7 +12,7 @@ def change_date_in_line(line: str, o_format: str, t_format: str) -> str:
     for match in matches:
         o_date = datetime.strptime(match, o_format)
         t_date = o_date.strftime(t_format)
-        line = line.replace(o_date, t_date)
+        line = line.replace(match, t_date)
 
     return line
 
