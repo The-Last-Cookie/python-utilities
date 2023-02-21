@@ -5,15 +5,19 @@ PATH = r''
 MAX_SIZE = 200
 FILES = []
 
-def resize_image(filename):
+def resize_image(filename) -> None:
     filepath = PATH + '/' + filename
-    image = Image.open(filepath)
+    try:
+        image = Image.open(filepath)
+    except FileNotFoundError:
+        print('File not found!')
+        return
 
     image.thumbnail(size=(MAX_SIZE, MAX_SIZE))
     print('Compressing file: ', filename)
     image.save(PATH + '/'+ 'Compressed_' + filename, image.format, optimize=True, quality=95, subsampling=0)
 
-def main():
+def main() -> None:
     formats = ('.jpeg', '.jpg', '.png')
 
     if FILES:
