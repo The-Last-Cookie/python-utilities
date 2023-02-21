@@ -5,7 +5,7 @@ def read_country_file(file: str) -> list:
 
     # remove newline character
     for index, line in enumerate(lines):
-        lines[index] = line[:-1]
+        lines[index] = line[:-2]
 
     return lines
 
