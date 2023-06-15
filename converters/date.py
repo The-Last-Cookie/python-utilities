@@ -1,3 +1,7 @@
+# TODO: use regex group capture
+# \((\d{4})-(\d{2})-(\d{2})\)
+# ($3.$2.$1)
+
 from datetime import datetime
 import re
 
