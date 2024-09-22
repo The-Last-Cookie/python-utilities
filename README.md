@@ -8,9 +8,25 @@ This is a small folder for python scripts to make life easier :)
 image-resizer.py
 ```
 
-Resizes an image (or several) to a specific size while keeping its aspect ratio (and also reduces file size a bit).
+Scales down an image (or several) to a specific size while keeping its aspect ratio (and also reduces file size a bit).
 
 *Notice: This requires [Pillow](https://python-pillow.org/).*
+
+## Image cropper
+
+Crop an image on specific coordinates
+
+## webp
+
+webp to jpg or gif converter
+
+as UI with tkinter?
+
+## wiki-search
+
+osu-wiki-search v2
+
+bash script here?
 
 ## Wrapper for youtube-dl
 
