@@ -32,9 +32,13 @@ webp to jpg or gif converter
 
 ## wiki-search
 
-osu-wiki-search v2
+```md
+wiki-search.sh
+```
 
-bash script here?
+The [osu! wiki](https://github.com/ppy/osu-wiki/) is a knowledge base for the rhythm game called *osu!*. For more information about osu!, see [here](https://osu.ppy.sh).
+
+With this tool, you can search for file content in any wiki article.
 
 ## Wrapper for youtube-dl
 
