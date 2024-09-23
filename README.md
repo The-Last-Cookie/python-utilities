@@ -14,11 +14,19 @@ Scales down an image (or several) to a specific size while keeping its aspect ra
 
 ## Image cropper
 
+```md
+image-crop.py
+```
+
 Crop an image on specific coordinates
+
+*Notice: This requires [Pillow](https://python-pillow.org/).*
 
 ## webp
 
 webp to jpg or gif converter
+
+*Notice: This requires [Pillow](https://python-pillow.org/).*
 
 - [ ] TODO: as UI with tkinter?
 
