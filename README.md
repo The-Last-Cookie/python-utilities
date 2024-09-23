@@ -24,6 +24,10 @@ Crop an image on specific coordinates
 
 ## webp
 
+```md
+webp.py
+```
+
 webp to jpg or gif converter
 
 *Notice: This requires [Pillow](https://python-pillow.org/).*
