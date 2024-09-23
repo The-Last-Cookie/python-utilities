@@ -16,7 +16,8 @@ def download_video():
 
     link = sys.argv[1]
 
-    command = str('youtube-dl -o "%USERPROFILE%\Downloads\%(title)s.%(ext)s" ' + link + ' --extract-audio --audio-format mp3 --audio-quality 256K')
+    output_file = "%USERPROFILE%\Downloads\%(title)s.%(ext)s"
+    command = str('youtube-dl -o ' + output_file + ' ' + link + ' --extract-audio --audio-format mp3 --audio-quality 256K')
     os.system(command)
 
 def get_filename(path):
@@ -25,7 +26,7 @@ def get_filename(path):
     else:
         last_occurence = path.rfind('\\')
         filename = path[last_occurence + 1:]
-    
+
     return filename
 
 download_video()
