@@ -3,6 +3,10 @@ import re
 from PIL import Image
 
 PATH = './original'
+X = 100
+Y = 200
+W = 400
+H = 300
 
 def crop_image(filename, x, y, w, h) -> None:
     print('Cropping file: ', filename)
@@ -22,11 +26,8 @@ def main() -> None:
     files = os.listdir(PATH)
     for file in files:
         for allowed_format in formats:
-            # Normal book pages have this format: 505, 349, 2205, 1538
-            # Wallpaper: TODO
-
             if file.endswith(allowed_format) and re.match('[a-z]+', file) is not None:
-                crop_image(file, 505, 349, 2205, 1538)
+                crop_image(file, X, Y, W, H)
 
 if __name__ == "__main__":
     main()
